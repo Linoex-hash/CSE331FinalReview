@@ -1,0 +1,148 @@
+\documentclass{beamer}
+\usepackage{dirtytalk}
+\usetheme{Frankfurt}
+\title{CSE 331 Final Exam Preparation}
+\subtitle{This is in no way a substitute for exam preperation, mearly a compilation of all the key talking points.}
+\author{Chandra Neppalli}
+\date{\today}
+\begin{document}
+    \maketitle
+    \section{Basic Proof Techniques}
+    \begin{frame}{Counter Example}  
+        \onslide<1->Best proof to use to \textit{disprove} universally true propositions.
+        \bigskip
+
+        \onslide<2->Ex: Every day is a Wednesday, where a counter example would be Monday is not Wednesday.
+    \end{frame}
+    \begin{frame}{Contradiction}
+        \onslide<1->Best proof to use if you want to assert something is true.
+        \bigskip
+
+        \onslide<2->Assume what you want to prove is false, then show this leads to a contradiction.
+        \bigskip
+
+        \onslide<3->Therefore, the original assumption has to be true.            
+    \end{frame}
+    \begin{frame}{Contraposition}
+        \onslide<1->Best proof for proving causality. Define two propositions E and F.
+        \bigskip
+
+        \onslide<2->{If you want to prove that E $\rightarrow$ F, 
+        it might be more doable to prove $\lnot$F $\rightarrow$ $\lnot$E, 
+        as they are both logically equivalent.}
+        \bigskip
+
+        \onslide<3->This is especially useful if the \textbf{scope} of F is smaller than the scope of E.
+    \end{frame}
+    \begin{frame}{Direct Proof}
+    \label{frame:directproof}
+        \onslide<1->If the proof is \textit{simple}, consider directly proving it.
+        \bigskip
+
+        \onslide<2->{Remember though, that you must maintain $W.L.O.G$, 
+        that your proof can never be too specific and must be arbitrary.}   
+    \end{frame}
+    \begin{frame}{Proof by Induction}
+        \onslide<1->{Proof by Induction is a really nice proof technique when you reduce your proof to a known 
+        correct base case.}
+        \bigskip
+
+        \onslide<2->{If proof needs to be correct for all numbers $\in \mathbb{N}$, and each step is dependant on the previous step, then \textit{every}
+        step can be reduced to a definitive base case that is easy to \hyperlink{frame:directproof}{directly prove}.}
+    \end{frame}
+    \begin{frame}{Extra: Progress Measure}
+        \onslide<1->This is useful for proving an algorithm with a loop terminates.
+        \bigskip
+
+        \onslide<2->Let $P(i)$ denote an integer such that:
+        \begin{itemize}
+            \item<3-> $P(0) = l$ 
+            \item<4-> $P(i)$ is an accumulator. This means that $P(i + 1) > P(i)$
+            \item<5-> $\forall i,\;\; P(i) \leq k$
+        \end{itemize}
+        \onslide<6->From these 3 properties, the number of iterations is bounded by $k - l + 1$
+        \bigskip
+
+        \onslide<7->Note: This isn't a runtime analysis, rather a proof that the algorithm terminates.
+    \end{frame}
+    \begin{frame}{Greedy Stays Ahead}
+        \onslide<1->This technique is used to prove that a greedy algorithm returns an optimal solution.
+        \bigskip
+
+        \onslide<2->At every step of a greedy algorithm, it will stay \textit{at least} as far as the optimal solution at that step.
+        \bigskip
+
+        \onslide<3->HW4 \say{Attack on Alarms} and Interval Scheduling are examples of problems with greedy solutions.
+    \end{frame}
+    \section{The Stable Matching Problem}
+    \begin{frame}{Introduction}
+        \onslide<1->Let's say there are two groups: Group A and Group B.
+        \bigskip
+
+        \onslide<2->How do we generate a \textbf{stable} matching between each member of the two groups efficiently?
+        \bigskip
+
+        \onslide<3->Moreover, what is a \textbf{stable} matching?
+    \end{frame}
+    \begin{frame}{Perfect Matchings}
+        \onslide<1->A \textbf{perfect matching} is a bijective matching between A and B.
+        \bigskip
+
+        \onslide<2->\textbf{Every member} in group A is matched with exactly one member in group B.
+        \bigskip
+
+        \onslide<3->Conversely, every member in group B is matched with \textbf{exactly} one member in group A.
+        \bigskip
+
+        \onslide<4->With $n$ members in each group, there are $n!$ perfect matchings.
+    \end{frame}
+    \begin{frame}{Instability}
+        \onslide<1->For a particular matching, define a member $m$ from group A and $n$ from group B such that ($m,n$) is not in the matching.
+        \bigskip
+
+        \onslide<2->If $m$ prefers $n$ over their current matching \textbf{and} $n$ prefers $m$ over their current matching, the entire match is an instability.
+    \end{frame}
+    \begin{frame}[fragile]{Stable Matching}
+        \only<-5>{
+            \onslide<1->A stable matching \textbf{is} a perfect matching with no instability.
+            \bigskip
+
+            \onslide<2->It therefore follows that the number of stable matchings 
+            is \textit{at least} the number of perfect matchings, or $n!$
+            \bigskip
+
+            \onslide<3->The Gale Shapely Algorithm is an $O(n^3)$ time algorithm that can output a stable matching.
+            \bigskip
+
+            \onslide<4->With the right data structures, the runtime can be reduced to $O(n^2)$. 
+            \bigskip
+
+            \onslide<5->Even though the runtime isn't linear, because the input size is $2n^2 \rightarrow \Theta(n^2)$\footnote<5->{This comes from $n$ Group A members and $n$ Group B members with their $2n$ preference lists}, the runtime \textbf{with respect} to the input size is $O(N)$, or linear time.
+        }
+        \only<6>{
+            {\small Code}:
+            \rule{\textwidth}{0.5pt}
+            \texttt{\footnotesize Initially all $m \in M$ and $w \in W$ are free\\
+                While there is a man $m$ who is free and hasn’t proposed to
+                every woman\\
+                \hspace{1cm}Choose such a man $m$\\
+                \hspace{1cm}Let $w$ be the highest-ranked woman in $m$’s\\
+                \hspace{2cm}preference list to whom $m$ has not yet proposed\\
+                \hspace{1cm}If $w$ is free then\\
+                \hspace{2cm}$(m, w)$ become engaged\\
+                \hspace{1cm}Else $w$ is currently engaged to $m'$\\
+                \hspace{2cm}If $w$ prefers $m'$ to $m$ then\\
+                \hspace{3cm}$m$ remains free\\
+                \hspace{2cm}If $w$ prefers $m$ to $m'$\\
+                \hspace{3cm}$(m, w)$ become engaged\\
+                \hspace{3cm}$m'$ becomes free\\
+                \hspace{2cm}Endif\\
+                \hspace{1cm}Endif\\
+                EndWhile\\
+                Return the set $S$ of engaged pairs.
+            }
+        }
+    \end{frame}
+
+    
+\end{document}
