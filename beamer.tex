@@ -1,10 +1,33 @@
+
+%%%%%%%%%%%%%% Author: Chandra Neppalli %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% Class: CSE 331 at SUNY University at Buffalo %%%%%%%%%%%%%%
+
 \documentclass{beamer}
+\usepackage{hyperref}
 \usepackage{dirtytalk}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 \usetheme{Frankfurt}
 \title{CSE 331 Final Exam Preparation}
 \subtitle{This is in no way a substitute for exam preperation, mearly a compilation of all the key talking points.}
 \author{Chandra Neppalli}
 \date{\today}
+\newcommand{\defineFigure}[4]{
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=#2\textwidth]{#1}
+        \caption{#3}
+        \label{fig:#4}
+    \end{figure}
+}
+\newcommand{\defineFigureReflected}[4]{
+    \begin{figure}[h]
+        \centering
+        \reflectbox{\includegraphics[width=#2\textwidth]{#1}}
+        \caption{#3}
+        \label{fig:#4}
+    \end{figure}
+}
 \begin{document}
     \maketitle
     \section{Basic Proof Techniques}
@@ -15,13 +38,23 @@
         \onslide<2->Ex: Every day is a Wednesday, where a counter example would be Monday is not Wednesday.
     \end{frame}
     \begin{frame}{Contradiction}
-        \onslide<1->Best proof to use if you want to assert something is true.
-        \bigskip
-
-        \onslide<2->Assume what you want to prove is false, then show this leads to a contradiction.
-        \bigskip
-
-        \onslide<3->Therefore, the original assumption has to be true.            
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \onslide<1->{Best proof to use if you want to assert something is true.}
+                \bigskip
+        
+                \onslide<2->{Assume what you want to prove is false, then show this leads to a contradiction.}
+                \bigskip
+        
+                \onslide<3->{Therefore, the original assumption has to be true.}             
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \defineFigureReflected
+                {contradiction}{0.75}
+                {Sourced from Google}{phoenixwright}
+            \end{column}
+        \end{columns}
+           
     \end{frame}
     \begin{frame}{Contraposition}
         \onslide<1->Best proof for proving causality. Define two propositions E and F.
@@ -34,8 +67,7 @@
 
         \onslide<3->This is especially useful if the \textbf{scope} of F is smaller than the scope of E.
     \end{frame}
-    \begin{frame}{Direct Proof}
-    \label{frame:directproof}
+    \begin{frame}{Direct Proof}\label{frame:directproof}
         \onslide<1->If the proof is \textit{simple}, consider directly proving it.
         \bigskip
 
@@ -65,14 +97,24 @@
 
         \onslide<7->Note: This isn't a runtime analysis, rather a proof that the algorithm terminates.
     \end{frame}
-    \begin{frame}{Greedy Stays Ahead}
-        \onslide<1->This technique is used to prove that a greedy algorithm returns an optimal solution.
-        \bigskip
+    \begin{frame}{Greedy Stays Ahead} \label{def:greedystaysahead}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \onslide<1->{This technique is used to prove that a greedy algorithm returns an optimal solution.}
+                \bigskip
+        
+                \onslide<2->{At every step of a greedy algorithm, it will stay \textit{at least} as far as the optimal solution at that step.}
+                \bigskip
+        
+                \onslide<3->{HW4 \say{Attack on Alarms} and Interval Scheduling are examples of problems with greedy solutions.}            
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \defineFigure
+                {download}{0.85}
+                {Sourced from New Grounds}{fig:greedystaysahead}
+            \end{column}
+        \end{columns}
 
-        \onslide<2->At every step of a greedy algorithm, it will stay \textit{at least} as far as the optimal solution at that step.
-        \bigskip
-
-        \onslide<3->HW4 \say{Attack on Alarms} and Interval Scheduling are examples of problems with greedy solutions.
     \end{frame}
     \section{The Stable Matching Problem}
     \begin{frame}{Introduction}
@@ -143,4 +185,46 @@
             }
         }
     \end{frame}    
-\end{document}
+    \section{Greedy Algorithms}
+    \begin{frame}{Introduction}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \onslide<1->{A greedy algorithm is an algorithm that at each step, 
+                produces a \textbf{locally} optimal solution.}
+                \bigskip
+        
+                \onslide<2->{It follows that at the end of the algorithm, the 
+                locally optimal solution returned can \textbf{approximate} 
+                a globally optimal solution.}
+                \bigskip
+        
+                \onslide<3->{See \hyperlink{def:greedystaysahead}
+                {\textbf{the greedy stays ahead proof}} for details on 
+                proving these types of algorithms.}       
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \defineFigure
+                {ksfmf2nhqk461}{0.75}
+                {\small Sourced from Google}{greedypic}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    \begin{frame}{Examples of Greedy Algorithms}
+        \only<-2>{\href{https://en.wikipedia.org/wiki/Dijkstra\%27s\_algorithm}{Dijkstra's Algorithm}:
+            \begin{itemize}
+                \item<1-> Given a weighted graph with no negative weights, one can greedily find the shortest path in $O((m + n)\log n)$ time using a heap/priority queue. This is with $n$ vertices and $m$ edges.
+                \item<2-> Useful for things like driving directions or fewest connecting flights.
+            \end{itemize}
+        }
+        \bigskip
+
+        \only<3->{\href{https://en.wikipedia.org/wiki/Prim\%27s\_algorithm}{Prim's Algorithm}:
+            \begin{itemize}
+                \item<3-> Given a weighted graph, one can generate a minimum spanning tree (a tree with the smallest/cheapest total edge cost) in $O(n^2)$ time with $n$ vertices. 
+                Note that this runtime assumes an adjacency matrix representation for the graph.
+                \item<4-> Refer to the wikipedia page for better complexities for graphs with different representations.
+                \item<5-> Useful for things like network topologies for cheapest communication between two devices.
+            \end{itemize}
+        }
+    \end{frame}
+    \end{document}
