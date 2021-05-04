@@ -184,13 +184,106 @@
                 Return the set $S$ of engaged pairs.
             }
         }
-    \end{frame}    
+    \end{frame}
+    \section{Graph Basics}
+    \begin{frame}{What are graphs?}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \onslide<1->{Graphs are a way to represent relations between data points.}
+                \bigskip
+
+                \onslide<2->{Graphs have a set of vertices which 
+                represent data points and a set of edges to model the \textbf{relation} between vertices.}
+                \bigskip
+
+                \onslide<3->{An edge exists between two or more 
+                vertices $iff$ there is a connection between them.}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \defineFigure
+                {Graph}{0.80}
+                {Sourced from Youtube}{lookatthisgraph}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    \begin{frame}{Graph Representation}
+        Adjacency List: Keep a $n$ length array. Vertices are indices of the array where each element of the array 
+        contains a pointer to a list of adjacent vertices to the index/vertex. 
+        This takes up $\Theta(nm)$ space for $m$ edges.
+        \bigskip
+
+        Adjacency Matrix: Keep a $n\; X\; n$ matrix. Rows and columns are vertices. 
+        An edge $(u,v)$ exists if the matrix at row $u$ and column $v$ 
+        is not null This takes up $\Theta(n^2)$ space.
+    \end{frame}
+    \begin{frame}{Undirected vs. Directed Graphs}
+        \onslide<1->A graph is undirected if edges go both ways. If for any vertices $u$, $v$, vertex $u$ connects to $v$, $v$ connects to $u$.
+        \bigskip
+
+        \onslide<2->A graph is directed if there is an edge $(u,v)$ such that $u$ is connected to $v$, but $v$ is not connected to $u$.
+        \bigskip
+
+        \onslide<3->{A graph is a tree if it is connected and there are \textbf{no} cycles present.}
+        \bigskip
+
+        \onslide<4->Bus transportation routes could be classified as an undirected graph, while airports and flights could be modeled as a directed graph.
+    \end{frame}
+    \begin{frame}{Paths and Cycles}
+        \onslide<1->{A path is a sequence of vertices and edges.}
+        \bigskip
+
+        \onslide<2->{A cycle is a sequence of vertices and edges 
+        where the first and last vertex are \textbf{the same}.}
+        \bigskip
+
+        \onslide<3->{A \textbf{simple path} is a path that contains 
+        no cycles. A \textbf{simple cycle} is a cycle in which the only 
+        repeating vertices are the first and last.}
+        \bigskip
+
+        \onslide<4->{A cycle needs \textbf{at least} 4 elements. The \textbf{maximum length} 
+        of a simple path for a graph with $n$ 
+        vertices is $n - 1$ \only<4->{\footnote{Pigeonhole Principle}}.}
+    \end{frame}
+    \begin{frame}{Connectivity}
+        \only<-3>{
+            \onslide<1->{A graph is connected if there is a path between any 
+            two vertices.}
+            \bigskip
+            
+            \onslide<2->{A \textbf{directed} graph is \textit{strongly connected}
+             $iff$ for any to vertices $u$ and $v$, if there is 
+             a path from $u$ to $v$, there must also be a path from $v$ to $u$.}
+            \bigskip
+    
+            \onslide<3->{A directed acyclic graph $\Leftrightarrow$ topological 
+            ordering, meaning the vertices can be ordered in a way that 
+            all edges point in the \textbf{same} direction.}
+            \bigskip  
+        }
+        \only<4->{
+            \onslide<4->{Breadth First Search (BFS) traverses a 
+            graph by layers and builds a BFS tree.}
+            \bigskip
+
+            \onslide<5->{It runs in $\Theta(n + m)$ time and is 
+            linear with respect to its input size.}
+            \bigskip
+
+            \onslide<6->{Depth First Search (DFS) traverses a graph by picking a 
+            point and following it until a dead end}
+            \bigskip
+
+            \onslide<7->{It runs in $\Theta(n + m)$ time and is 
+            linear with respect to its input size.}
+        }
+    \end{frame}
     \section{Greedy Algorithms}
     \begin{frame}{Introduction}
         \begin{columns}
             \begin{column}{0.5\textwidth}
                 \onslide<1->{A greedy algorithm is an algorithm that at each step, 
-                produces a \textbf{locally} optimal solution.}
+                produces a \textbf{locally} optimal solution. The goal is to achieve \textbf{polynomial time} for the algorithm.}
                 \bigskip
         
                 \onslide<2->{It follows that at the end of the algorithm, the 
@@ -209,22 +302,21 @@
             \end{column}
         \end{columns}
     \end{frame}
-    \begin{frame}{Examples of Greedy Algorithms}
-        \only<-2>{\href{https://en.wikipedia.org/wiki/Dijkstra\%27s\_algorithm}{Dijkstra's Algorithm}:
-            \begin{itemize}
-                \item<1-> Given a weighted graph with no negative weights, one can greedily find the shortest path in $O((m + n)\log n)$ time using a heap/priority queue. This is with $n$ vertices and $m$ edges.
-                \item<2-> Useful for things like driving directions or fewest connecting flights.
-            \end{itemize}
-        }
+    \begin{frame}{Interval Scheduling Problem}
+        \onslide<1->{Given a set of tasks to do over a period in time, how
+        do you pick the \textbf{maximum} number of tasks that aren't in conflict?}
         \bigskip
 
-        \only<3->{\href{https://en.wikipedia.org/wiki/Prim\%27s\_algorithm}{Prim's Algorithm}:
-            \begin{itemize}
-                \item<3-> Given a weighted graph, one can generate a minimum spanning tree (a tree with the smallest/cheapest total edge cost) in $O(n^2)$ time with $n$ vertices. 
-                Note that this runtime assumes an adjacency matrix representation for the graph.
-                \item<4-> Refer to the wikipedia page for better complexities for graphs with different representations.
-                \item<5-> Useful for things like network topologies for cheapest communication between two devices.
-            \end{itemize}
-        }
+        \onslide<2->{There are numerous greedy algorithms:}
+        \begin{itemize}
+            \item<3->\href{https://en.wikipedia.org/wiki/Prim\%27s\_algorithm}{Prim's Algorithm}
+            \item<4->\href{https://en.wikipedia.org/wiki/Bor\%C5\%AFvka\%27s\_algorithm}{Boruvka’s Algorithm}
+            \item<5->\href{https://en.wikipedia.org/wiki/Kruskal\%27s\_algorithm}{Kruskal's Algorithm}
+        \end{itemize}
+        \onslide<6->Refer to the sources for proof of correctness and runtime analysis.
     \end{frame}
-    \end{document}
+    \begin{frame}{Shortest Path Problem}
+        \onslide<1->{Given a weighted graph with \textbf{no} negative weights,
+        how do you find the shortest path?}        
+    \end{frame}
+\end{document}
