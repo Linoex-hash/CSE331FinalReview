@@ -3,7 +3,6 @@
 %%%%%%%%%%%%%% Class: CSE 331 at SUNY University at Buffalo %%%%%%%%%%%%%%
 
 \documentclass{beamer}
-\usepackage{hyperref}
 \usepackage{dirtytalk}
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
@@ -80,7 +79,7 @@
         \bigskip
 
         \onslide<2->{If proof needs to be correct for all numbers $\in \mathbb{N}$, and each step is dependant on the previous step, then \textit{every}
-        step can be reduced to a definitive base case that is easy to \hyperlink{frame:directproof}{directly prove}.}
+        step can be reduced to a definitive base case that is easy to \hyperlink<2->{frame:directproof}{directly prove}.}
     \end{frame}
     \begin{frame}{Extra: Progress Measure}
         \onslide<1->This is useful for proving an algorithm with a loop terminates.
@@ -271,7 +270,7 @@
             \bigskip
 
             \onslide<6->{Depth First Search (DFS) traverses a graph by picking a 
-            point and following it until a dead end}
+            point and following it until a dead end.}
             \bigskip
 
             \onslide<7->{It runs in $\Theta(n + m)$ time and is 
@@ -283,15 +282,18 @@
         \begin{columns}
             \begin{column}{0.5\textwidth}
                 \onslide<1->{A greedy algorithm is an algorithm that at each step, 
-                produces a \textbf{locally} optimal solution. The goal is to achieve \textbf{polynomial time} for the algorithm.}
+                produces a \textbf{locally} optimal solution. 
+                The goal is to achieve \textbf{polynomial time} 
+                for a given algorithmic problem.}
                 \bigskip
         
                 \onslide<2->{It follows that at the end of the algorithm, the 
                 locally optimal solution returned can \textbf{approximate} 
-                a globally optimal solution.}
+                a globally optimal solution. A greedy algorithm \textbf{never}
+                backtracks.}
                 \bigskip
         
-                \onslide<3->{See \hyperlink{def:greedystaysahead}
+                \onslide<3->{See \hyperlink<3->{def:greedystaysahead}
                 {\textbf{the greedy stays ahead proof}} for details on 
                 proving these types of algorithms.}       
             \end{column}
@@ -304,10 +306,21 @@
     \end{frame}
     \begin{frame}{Interval Scheduling Problem}
         \onslide<1->{Given a set of tasks to do over a period in time, how
-        do you pick the \textbf{maximum} number of tasks that aren't in conflict?}
+        do you pick the \textbf{maximum} number 
+        of tasks that aren't in conflict?}
         \bigskip
 
-        \onslide<2->{There are numerous greedy algorithms:}
+        \onslide<2->{One greedy solution is to sort the set of tasks by 
+        their earliest $\rightarrow$ latest finishing time.}
+        \bigskip
+
+    \end{frame}
+    \begin{frame}{Minimum Spanning Tree Problem}
+        \onslide<1->{Given a \textbf{weighted}, graph, how do you construct a tree such that 
+        the accumulation of all the weights in the tree is minimized?}
+        \bigskip
+
+        \onslide<2->{There are numerous greedy algorithms to generate an MST:}
         \begin{itemize}
             \item<3->\href{https://en.wikipedia.org/wiki/Prim\%27s\_algorithm}{Prim's Algorithm}
             \item<4->\href{https://en.wikipedia.org/wiki/Bor\%C5\%AFvka\%27s\_algorithm}{Boruvka’s Algorithm}
