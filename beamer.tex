@@ -245,7 +245,7 @@
         vertices is $n - 1$ \only<4->{\footnote{Pigeonhole Principle}}.}
     \end{frame}
     \begin{frame}{Connectivity}
-        \only<-3>{
+        \only<-4>{
             \onslide<1->{A graph is connected if there is a path between any 
             two vertices.}
             \bigskip
@@ -258,22 +258,25 @@
             \onslide<3->{A directed acyclic graph $\Leftrightarrow$ topological 
             ordering, meaning the vertices can be ordered in a way that 
             all edges point in the \textbf{same} direction.}
-            \bigskip  
+            \bigskip
+
+            \onslide<4->{A graph can be considered $k$-partite if its set of vertices 
+            can be partitioned into $k$ subsets where every edge \say{bridges} 2 different subsets.}
         }
-        \only<4->{
-            \onslide<4->{Breadth First Search (BFS) traverses a 
+        \only<5->{
+            \onslide<5->{Breadth First Search (BFS) traverses a 
             graph by layers and builds a BFS tree.}
             \bigskip
 
-            \onslide<5->{It runs in $\Theta(n + m)$ time and is 
+            \onslide<6->{It runs in $\Theta(n + m)$ time and is 
             linear with respect to its input size.}
             \bigskip
 
-            \onslide<6->{Depth First Search (DFS) traverses a graph by picking a 
+            \onslide<7->{Depth First Search (DFS) traverses a graph by picking a 
             point and following it until a dead end.}
             \bigskip
 
-            \onslide<7->{It runs in $\Theta(n + m)$ time and is 
+            \onslide<8->{It runs in $\Theta(n + m)$ time and is 
             linear with respect to its input size.}
         }
     \end{frame}
@@ -322,14 +325,23 @@
 
         \onslide<2->{There are numerous greedy algorithms to generate an MST:}
         \begin{itemize}
-            \item<3->\href{https://en.wikipedia.org/wiki/Prim\%27s\_algorithm}{Prim's Algorithm}
-            \item<4->\href{https://en.wikipedia.org/wiki/Bor\%C5\%AFvka\%27s\_algorithm}{Boruvka’s Algorithm}
-            \item<5->\href{https://en.wikipedia.org/wiki/Kruskal\%27s\_algorithm}{Kruskal's Algorithm}
+            \item<3->\only<3->{\href{https://en.wikipedia.org/wiki/Prim\%27s\_algorithm}{Prim's Algorithm}}
+            \item<4->\only<4->{\href{https://en.wikipedia.org/wiki/Bor\%C5\%AFvka\%27s\_algorithm}{Boruvka’s Algorithm}}
+            \item<5->\only<5->{\href{https://en.wikipedia.org/wiki/Kruskal\%27s\_algorithm}{Kruskal's Algorithm}}
         \end{itemize}
         \onslide<6->Refer to the sources for proof of correctness and runtime analysis.
     \end{frame}
     \begin{frame}{Shortest Path Problem}
         \onslide<1->{Given a weighted graph with \textbf{no} negative weights,
-        how do you find the shortest path?}        
+        how do you find the shortest path?}
+        \bigskip
+        
+        \onslide<2->{The answer is \only<2->{\href{https://en.wikipedia.org/wiki/Dijkstra\%27s\_algorithm}{Dikjstra's Algorithm}.}}
+        \bigskip
+
+        \onslide<3->{Dijkstra's Algorithm is a greedy algorithm that greedily selects the \textbf{shortest path} from a source vertex $s$ to any vertex in the graph.}
+        \bigskip
+
+        \onslide<4->{It's proof of correctness and runtime analysis follows from the embedded link.}
     \end{frame}
 \end{document}
